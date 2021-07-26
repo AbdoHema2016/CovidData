@@ -1,6 +1,14 @@
 import {all, fork} from 'redux-saga/effects';
-import {getDailyDataWatcher} from './containers/Dashboard/redux/sagas';
+import {
+  getDailyDataWatcher,
+  getDeathDataWatcher,
+  getRecoveryDataWatcher,
+} from './containers/Dashboard/redux/sagas';
 
 export function* rootSaga() {
-  yield all([fork(getDailyDataWatcher)]);
+  yield all([
+    fork(getDailyDataWatcher),
+    fork(getRecoveryDataWatcher),
+    fork(getDeathDataWatcher),
+  ]);
 }

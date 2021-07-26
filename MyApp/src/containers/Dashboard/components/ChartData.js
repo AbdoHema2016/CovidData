@@ -10,19 +10,42 @@ import {
 import {Dimensions} from 'react-native';
 import {formatDateLocal} from '../../../utilities/misc';
 import {dateFormats} from '../../../utilities/constants';
+import Loader from '../../../components/Loader';
 
-const DailyData = ({dailyData}) => {
+const ChartData = ({Data, loading, cases, recovery, deaths}) => {
+  if (loading) {
+    return <Loader loading={loading} />;
+  }
   const screenWidth = Dimensions.get('window').width;
+  const getChartTitle = () => {
+    if (cases) {
+      return ['Last 7 days cases'];
+    }
+    if (recovery) {
+      return ['Last 7 days recovery data'];
+    }
+    if (deaths) {
+      return ['Last 7 deaths'];
+    }
+  };
   const data = {
-    labels: dailyData.map((x) =>
-      formatDateLocal(x.date, dateFormats.DailyDate),
-    ),
+    labels: Data.map((x) => formatDateLocal(x.date, dateFormats.DailyDate)),
     datasets: [
       {
-        data: dailyData.map((x) => x.cases),
+        data: Data.map((x) => {
+          if (cases) {
+            return x.cases;
+          }
+          if (recovery) {
+            return x.recovered;
+          }
+          if (deaths) {
+            return x.deaths;
+          }
+        }),
       },
     ],
-    legend: ['Last 7 days'], // optional
+    legend: getChartTitle(), // optional
   };
   const chartConfig = {
     backgroundGradientFrom: '#1E2923',
@@ -40,7 +63,8 @@ const DailyData = ({dailyData}) => {
       width={screenWidth}
       height={220}
       chartConfig={chartConfig}
+      bezier={recovery ? true : false}
     />
   );
 };
-export default DailyData;
+export default ChartData;
