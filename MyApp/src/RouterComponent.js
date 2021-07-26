@@ -1,0 +1,24 @@
+import React from 'react';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
+import Dashboard from '../src/containers/Dashboard';
+import {screenNames} from './navigation/navigationConstants';
+
+const AuthStack = createStackNavigator();
+
+const AuthNavigator = () => (
+  <AuthStack.Navigator
+    screenOptions={{
+      cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+    }}>
+    <AuthStack.Screen
+      name={screenNames.Dashboard}
+      component={Dashboard}
+      options={{headerShown: false}}
+    />
+  </AuthStack.Navigator>
+);
+
+export default AuthNavigator;

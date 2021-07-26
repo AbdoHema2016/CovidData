@@ -1,0 +1,34 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '11.0'
+
+project 'MyApp',
+  'Debug' => :debug,
+  'Release' => :release,
+  'Production.Debug' => :debug,
+  'Production.Release' => :release,
+  'Staging.Debug' => :debug,
+  'Staging.Release' => :release
+
+
+target 'MyApp' do
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  target 'MyAppTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  use_native_modules!
+
+end
+
+target 'MyApp-tvOS' do
+  # Pods for MyApp-tvOS
+
+  target 'MyApp-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+end

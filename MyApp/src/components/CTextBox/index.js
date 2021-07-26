@@ -1,0 +1,42 @@
+import React from 'react';
+import {View, TextInput} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Style from './style';
+import {Colors} from '../../utilities/Colors';
+
+function CTextBox(props) {
+  const {
+    hidePassword,
+    containerStyle,
+    style,
+    maxLength,
+    keyboardType,
+    onChangeText,
+    value,
+    leftIcon,
+    editable,
+    placeHolderText,
+  } = props;
+  return (
+    <View style={[Style.container, containerStyle]}>
+      <View style={Style.iconContainer}>
+        <FontAwesome name={leftIcon} size={20} style={Style.icon} />
+      </View>
+      <TextInput
+        style={[Style.input, style]}
+        underlineColorAndroid="transparent"
+        placeholder={placeHolderText}
+        placeholderTextColor={Colors.black1}
+        secureTextEntry={hidePassword}
+        value={value}
+        keyboardType={keyboardType}
+        onChangeText={onChangeText}
+        maxLength={maxLength}
+        editable={editable}
+        selectionColor={Colors.black1}
+      />
+    </View>
+  );
+}
+
+export default CTextBox;
